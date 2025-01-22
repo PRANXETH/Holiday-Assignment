@@ -1,0 +1,19 @@
+#include <stdbool.h>
+#include <stdlib.h>
+
+int height(struct TreeNode* node, bool* isBalanced) {
+    if (!node) return 0;
+    int leftHeight = height(node->left, isBalanced);
+    int rightHeight = height(node->right, isBalanced);
+    if (leftHeight == -1 || rightHeight == -1 || abs(leftHeight - rightHeight) > 1) {
+        *isBalanced = false;
+        return -1;
+    }
+    return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
+}
+
+bool isBalanced(struct TreeNode* root) {
+    bool isBalancedFlag = true;
+    height(root, &isBalancedFlag);
+    return isBalancedFlag;
+}
